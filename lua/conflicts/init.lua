@@ -9,6 +9,7 @@ local git_command = utils.__git_command
 local M = {}
 
 M.conflicts = function(opts)
+	opts = opts or {}
 	opts.git_command =
 		vim.F.if_nil(opts.git_command, git_command({ "diff", "--name-only", "--diff-filter=U", "--relative" }, opts))
 	opts.entry_maker = vim.F.if_nil(opts.entry_maker, make_entry.gen_from_file(opts))
