@@ -19,9 +19,13 @@ M.conflicts = function(opts)
 			prompt_title = "Git Conflicts",
 			__locations_input = true,
 			finder = finders.new_oneshot_job(
-				vim.tbl_flatten({
-					opts.git_command,
-				}),
+				(function(table)
+					if vim.iter and vim.iter({}).flatten then
+						return vim.iter(table):flatten():totable()
+					else
+						return vim.tbl_flatten(table)
+					end
+				end)(opts.git_command),
 				opts
 			),
 			previewer = conf.grep_previewer(opts),
